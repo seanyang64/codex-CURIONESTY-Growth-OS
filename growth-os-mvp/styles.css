@@ -2094,6 +2094,207 @@ legend {
   color: var(--gold);
 }
 
+.course-summary-panel {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.course-summary-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.course-type-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.course-type-card {
+  border: 1px solid rgba(218, 213, 194, 0.14);
+  border-radius: var(--radius-sm);
+  background: rgba(4, 7, 8, 0.28);
+  padding: 10px;
+}
+
+.course-type-card strong {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--gold);
+  font-size: 13px;
+}
+
+.course-type-card span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.course-calendar-board {
+  display: grid;
+  gap: 12px;
+}
+
+.course-calendar-controls {
+  display: flex;
+  align-items: end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.course-calendar-controls label {
+  min-width: 180px;
+}
+
+.course-quarter-calendar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.course-month-panel {
+  border: 1px solid rgba(218, 213, 194, 0.14);
+  border-radius: var(--radius-sm);
+  background: rgba(4, 7, 8, 0.28);
+  padding: 10px;
+  min-width: 0;
+}
+
+.course-month-title {
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.course-month-weekdays,
+.course-month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.course-month-weekdays span {
+  color: var(--muted);
+  font-size: 10px;
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+.course-month-grid {
+  border: 1px solid rgba(218, 213, 194, 0.12);
+  background: rgba(218, 213, 194, 0.1);
+  gap: 1px;
+}
+
+.course-month-cell {
+  min-height: 74px;
+  background: rgba(17, 20, 19, 0.9);
+  padding: 4px;
+  overflow: hidden;
+}
+
+.course-month-cell.muted {
+  background: rgba(24, 27, 26, 0.82);
+  opacity: 0.62;
+}
+
+.course-month-cell.today {
+  box-shadow: inset 0 0 0 1px rgba(54, 197, 240, 0.75);
+}
+
+.course-month-date {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1;
+  text-align: right;
+  margin-bottom: 4px;
+}
+
+.course-day-blocks {
+  display: grid;
+  gap: 3px;
+}
+
+.course-day-block {
+  display: block;
+  width: 100%;
+  min-height: 8px;
+  border: 0;
+  border-radius: 2px;
+  padding: 0;
+  opacity: 0.92;
+}
+
+.course-day-block:hover {
+  opacity: 1;
+  outline: 1px solid rgba(235, 233, 223, 0.78);
+  outline-offset: 1px;
+}
+
+.course-day-block.event-color-1 { background: #36c5f0; }
+.course-day-block.event-color-2 { background: #31e867; }
+.course-day-block.event-color-3 { background: #ffd21f; }
+.course-day-block.event-color-4 { background: #b770ff; }
+.course-day-block.event-color-5 { background: #ff725e; }
+.course-day-block.event-color-6 { background: #58d68d; }
+.course-day-block.event-color-7 { background: #6f8cff; }
+.course-day-block.event-color-8 { background: #ff75d8; }
+
+.course-calendar-detail {
+  display: grid;
+  gap: 10px;
+}
+
+.selected-course-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+}
+
+.report-record-picker {
+  display: grid;
+  gap: 8px;
+}
+
+.report-record-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  border: 1px solid rgba(218, 213, 194, 0.14);
+  border-radius: var(--radius-sm);
+  background: rgba(4, 7, 8, 0.28);
+  padding: 10px;
+}
+
+.report-record-row input {
+  margin-top: 4px;
+}
+
+.report-record-row span {
+  display: grid;
+  gap: 4px;
+}
+
+.report-record-row strong {
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.report-record-row small,
+.report-record-row em {
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.report-record-row.internal-only {
+  border-color: rgba(255, 63, 120, 0.24);
+  background: rgba(255, 63, 120, 0.08);
+}
+
 .filter-details {
   margin-bottom: 12px;
   padding: 9px 11px;
@@ -2231,6 +2432,7 @@ legend {
   .workspace-grid,
   .two-column,
   .students-layout,
+  .course-quarter-calendar,
   .stats-grid {
     grid-template-columns: 1fr;
   }
@@ -2275,6 +2477,14 @@ legend {
 
   .attendance-row {
     grid-template-columns: 1fr;
+  }
+
+  .selected-course-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .course-month-cell {
+    min-height: 58px;
   }
 
   .panel,
@@ -2326,7 +2536,9 @@ legend {
   .policy-summary-grid,
   .policy-sections,
   .report-filter-grid,
-  .module-filter-grid {
+  .module-filter-grid,
+  .course-summary-grid,
+  .course-type-grid {
     grid-template-columns: 1fr;
   }
 }

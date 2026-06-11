@@ -263,6 +263,7 @@
               <label class="wide">事实描述<textarea name="fact" required rows="4" placeholder="只写老师看到的具体行为，不先下判断。"></textarea></label>
               <label class="wide">行动建议<textarea name="suggestion" rows="3" placeholder="下一步如何支持这个学生。"></textarea></label>
               <label class="check-row wide"><input type="checkbox" name="followUp"> 需要导师跟进</label>
+              <label class="check-row wide"><input type="checkbox" name="reportVisible" checked> 可进入报告素材</label>
               <button class="primary-button wide" type="submit">保存动力记录</button>
             </form>
           </section>
@@ -346,6 +347,45 @@
             <div id="courseList" class="record-list empty-aware"></div>
           </section>
         </div>
+        <section class="panel course-calendar-board">
+          <div class="panel-head">
+            <h2>三个月课程日历</h2>
+            <p>用色块查看未来三个月排课；同一天按开始时间从早到晚排列，点击色块查看详情并编辑。</p>
+          </div>
+          <div class="course-calendar-controls">
+            <button class="secondary-button small-button" data-course-calendar-prev type="button">上三个月</button>
+            <label>起始月份<input id="courseCalendarMonth" type="month"></label>
+            <button class="secondary-button small-button" data-course-calendar-today type="button">回到本月</button>
+            <button class="secondary-button small-button" data-course-calendar-next type="button">下三个月</button>
+          </div>
+          <div id="courseQuarterCalendar" class="course-quarter-calendar"></div>
+          <div id="courseCalendarDetail" class="course-calendar-detail empty-aware"></div>
+        </section>
+        <section class="panel">
+          <div class="panel-head">
+            <h2>学生修课记录</h2>
+            <p>登记学生是否报名、进行中、完成、退出或旁听；成绩录入后会自动补为已完成修课记录。</p>
+          </div>
+          <form id="courseEnrollmentForm" class="form-grid compact">
+            <label>学生<select name="studentId" id="courseEnrollmentStudent" required></select></label>
+            <label>课程/项目<select name="courseId" data-course-select required></select></label>
+            <label>周期<input name="term" placeholder="2026 春季 / 项目第 1 期"></label>
+            <label>状态
+              <select name="status">
+                <option>报名</option>
+                <option>进行中</option>
+                <option>已完成</option>
+                <option>退出</option>
+                <option>旁听</option>
+              </select>
+            </label>
+            <label>参与次数<input name="attendanceCount" type="number" min="0" placeholder="例：12"></label>
+            <label class="wide">备注<input name="note" placeholder="例：完成展示；中途退出；旁听不计入 GPA"></label>
+            <button class="primary-button wide" type="submit">保存修课记录</button>
+          </form>
+          <div id="studentCourseStats" class="course-summary-panel empty-aware"></div>
+          <div id="courseEnrollmentList" class="record-list empty-aware"></div>
+        </section>
       </section>
 
       <section class="view" id="view-attendance" data-title="信用" data-subtitle="记录信用加减项，查看信用分影响线和风险学生。">
@@ -486,8 +526,15 @@
           </details>
           <div class="report-controls">
             <label>选择学生<select id="reportStudent"></select></label>
+            <label>开始日期<input id="reportStartDate" type="date"></label>
+            <label>结束日期<input id="reportEndDate" type="date"></label>
             <button class="primary-button" id="generateReport" type="button">生成报告</button>
             <button class="secondary-button" id="printReport" type="button">打印 / 存为 PDF</button>
+          </div>
+          <div class="tool-block">
+            <h3>动力中心报告素材</h3>
+            <p class="muted-text">默认只勾选“可进入报告”的记录；导师反思或敏感内容可在成长记录页设为“仅内部”。</p>
+            <div id="reportMotivationPicker" class="report-record-picker empty-aware"></div>
           </div>
         </section>
         <article id="reportOutput" class="report-output panel"></article>
