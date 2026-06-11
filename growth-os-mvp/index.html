@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CURIONESTY Growth OS MVP</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="主导航">
+      <div class="brand">
+        <div class="brand-mark">C</div>
+        <div>
+          <div class="brand-title">Growth OS</div>
+          <div class="brand-subtitle">好奇成长系统 MVP</div>
+        </div>
+      </div>
+      <nav class="nav" id="nav"></nav>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1 id="pageTitle">工作台</h1>
+          <p id="pageSubtitle">老师每天最常用的入口：记录、跟进、课程日历、风险提醒。</p>
+        </div>
+        <div class="top-actions">
+          <label class="search-box">
+            <span>搜索</span>
+            <input id="globalSearch" type="search" placeholder="学生、课程、标签">
+          </label>
+        </div>
+      </header>
+
+      <section class="view active" id="view-dashboard" data-title="工作台" data-subtitle="老师每天最常用的入口：记录、跟进、课程日历、风险提醒。">
+        <div class="stats-grid">
+          <div class="stat-block">
+            <span>学生</span>
+            <strong id="statStudents">0</strong>
+          </div>
+          <div class="stat-block">
+            <span>动力记录</span>
+            <strong id="statMotivation">0</strong>
+          </div>
+          <div class="stat-block">
+            <span>GPA 记录</span>
+            <strong id="statGrades">0</strong>
+          </div>
+          <div class="stat-block">
+            <span>平均信用积分</span>
+            <strong id="statCredit">0</strong>
+          </div>
+          <div class="stat-block">
+            <span>待跟进</span>
+            <strong id="statFollowups">0</strong>
+          </div>
+        </div>
+
+        <div class="workspace-grid">
+          <section class="growth-hero">
+            <div>
+              <span class="hero-kicker">Today Quest</span>
+              <h2>捕捉一个成长瞬间</h2>
+              <p>把老师看见的好奇、勇气、觉悟、情绪和其他关键状态，变成学生档案里的成长证据。</p>
+            </div>
+            <div class="hero-orbit" aria-hidden="true">
+              <span>好奇</span>
+              <span>勇气</span>
+              <span>觉悟</span>
+            </div>
+          </section>
+          <section class="panel calendar-panel">
+            <div class="panel-head">
+              <h2>今日工作台</h2>
+              <p>优先处理老师每天最常用的入口。</p>
+            </div>
+            <div class="action-list">
+              <button class="action-row" data-jump="motivation" type="button">
+                <span class="action-kicker">成长记录</span>
+                <strong>快速记录学生当下状态</strong>
+                <small>好奇、勇气、觉悟、情绪、其他 + 事实标签 + 行动建议</small>
+              </button>
+              <button class="action-row" data-jump="gpa" type="button">
+                <span class="action-kicker">GPA</span>
+                <strong>录入课程成绩和科目评语</strong>
+                <small>成绩、学分、是否计入 GPA、老师建议</small>
+              </button>
+              <button class="action-row" data-jump="reports" type="button">
+                <span class="action-kicker">报告</span>
+                <strong>生成学生基础成长档案</strong>
+                <small>汇总动力记录、信用积分、GPA 和科目评语</small>
+              </button>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <h2>待导师跟进</h2>
+              <p>来自动力中心记录里的行动建议。</p>
+            </div>
+            <div id="followupList" class="record-list empty-aware"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head">
+              <h2>课程日历</h2>
+              <p>按开始时间展示近期课程、项目和特色周。</p>
+            </div>
+            <div id="calendarList" class="calendar-list empty-aware"></div>
+          </section>
+        </div>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>最近成长记录</h2>
+            <p>系统把老师的即时观察归入学生档案。</p>
+          </div>
+          <div id="recentRecords" class="timeline-list empty-aware"></div>
+        </section>
+      </section>
+
+      <section class="view" id="view-students" data-title="学生档案" data-subtitle="一生一学号，所有中心和项目记录都归入同一个学生档案。">
+        <div class="students-layout">
+          <section class="panel student-editor-panel">
+            <div class="panel-head">
+              <h2 id="studentFormTitle">新增学生</h2>
+              <p>第一版先保存关键字段，后续可扩展家庭、健康、合同等信息。</p>
+            </div>
+            <form id="studentForm" class="form-grid">
+              <label>中文名<input name="name" required placeholder="例：林一舟"></label>
+              <label>英文名<input name="englishName" placeholder="例：Leo"></label>
+              <label>学号<input name="studentNo" required placeholder="例：C2026001"></label>
+              <label>年龄<input name="age" type="number" min="9" max="20" placeholder="13"></label>
+              <label>当前项目
+                <select name="program">
+                  <option>好奇学习社区</option>
+                  <option>KIID SCHOOL 钥匙玩校</option>
+                  <option>好奇新生社区</option>
+                  <option>好奇·清迈</option>
+                </select>
+              </label>
+              <label>学院标签<select name="academyId" data-academy-select></select></label>
+              <label>状态
+                <select name="status">
+                  <option>好奇在读</option>
+                  <option>毕业</option>
+                  <option>离开</option>
+                  <option>成都新生社区在读</option>
+                  <option>深圳新生社区在读</option>
+                </select>
+              </label>
+              <label class="wide">标签<input name="tags" placeholder="阅读强、需要情绪支持、项目型学习"></label>
+              <label class="wide">备注<textarea name="notes" rows="3" placeholder="需要老师特别留意的信息"></textarea></label>
+              <div class="form-actions wide">
+                <button class="primary-button" id="studentSubmitButton" type="submit">保存学生</button>
+                <button class="secondary-button" id="cancelStudentEdit" type="button" hidden>取消编辑</button>
+              </div>
+            </form>
+          </section>
+          <section class="panel student-list-panel">
+            <div class="panel-head">
+              <h2>学生列表</h2>
+              <p>点击学生可在右侧模块中继续记录。</p>
+            </div>
+            <details class="filter-details">
+              <summary>筛选学生</summary>
+              <div class="module-filter-grid">
+                <div>
+                  <h3>状态筛选</h3>
+                  <div id="studentStatusFilters" class="checkbox-grid compact-filter"></div>
+                </div>
+                <div>
+                  <h3>学院筛选</h3>
+                  <div id="studentAcademyFilters" class="checkbox-grid compact-filter"></div>
+                </div>
+              </div>
+            </details>
+            <div id="studentList" class="student-list empty-aware"></div>
+          </section>
+          <section class="panel utility-panel">
+            <div class="panel-head">
+              <h2>名单导入 / 导出</h2>
+              <p>使用 CSV/TSV，Excel、Google Sheet、Numbers 都可以打开或另存。</p>
+            </div>
+            <div class="tool-block">
+              <h3>自定义导出字段</h3>
+              <div id="studentExportFields" class="checkbox-grid"></div>
+              <div class="form-actions">
+                <button class="primary-button" id="exportStudentsButton" type="button">导出学生名单</button>
+                <button class="secondary-button" id="downloadStudentTemplate" type="button">下载导入模板</button>
+              </div>
+            </div>
+            <div class="tool-block">
+              <h3>批量导入学生</h3>
+              <label>上传 CSV / TSV 文件<input id="studentImportFile" type="file" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values"></label>
+              <p class="muted-text">导入时按“学号”匹配：学号已存在则更新，学号不存在则新增。</p>
+              <div id="studentImportPreview" class="import-preview empty-aware"></div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="view-motivation" data-title="成长记录" data-subtitle="老师快速记录学生状态：事实、维度、行动建议，自动进入成长档案。">
+        <div class="two-column">
+          <section class="panel">
+            <div class="panel-head">
+              <h2>快速记录</h2>
+              <p>目标是 30 秒内完成一条能进入成长档案的事实记录。</p>
+            </div>
+            <details class="filter-details">
+              <summary>筛选学生</summary>
+              <div class="module-filter-grid">
+                <div>
+                  <h3>状态筛选</h3>
+                  <div id="motivationStatusFilters" class="checkbox-grid compact-filter"></div>
+                </div>
+                <div>
+                  <h3>学院筛选</h3>
+                  <div id="motivationAcademyFilters" class="checkbox-grid compact-filter"></div>
+                </div>
+              </div>
+            </details>
+            <form id="motivationForm" class="form-grid">
+              <label>学生<select name="studentId" id="motivationStudentSelect" required></select></label>
+              <label>记录老师<input name="teacher" required placeholder="例：Bo"></label>
+              <label>发生场景
+                <select name="scene">
+                  <option>课堂</option>
+                  <option>学院游戏</option>
+                  <option>夜总会</option>
+                  <option>嗨玩周</option>
+                  <option>常识周</option>
+                  <option>露营周</option>
+                  <option>创造周</option>
+                  <option>做事</option>
+                  <option>自由时间</option>
+                  <option>假期</option>
+                  <option>阅读</option>
+                  <option>运动</option>
+                  <option>生活</option>
+                  <option>冲突</option>
+                  <option>夏令营</option>
+                  <option>冬令营</option>
+                  <option>其他时间</option>
+                </select>
+              </label>
+              <label>状态倾向
+                <select name="statusTone">
+                  <option>正向出现</option>
+                  <option>需要支持</option>
+                  <option>明显波动</option>
+                </select>
+              </label>
+              <fieldset class="wide">
+                <legend>成长维度</legend>
+                <label><input type="checkbox" name="dimension" value="好奇"> 好奇</label>
+                <label><input type="checkbox" name="dimension" value="勇气"> 勇气</label>
+                <label><input type="checkbox" name="dimension" value="觉悟"> 觉悟</label>
+                <label><input type="checkbox" name="dimension" value="情绪"> 情绪</label>
+                <label><input type="checkbox" name="dimension" value="其他"> 其他</label>
+              </fieldset>
+              <label class="wide">事实标签<input name="tags" placeholder="主动提问、面对失败、自我反思"></label>
+              <label class="wide">事实描述<textarea name="fact" required rows="4" placeholder="只写老师看到的具体行为，不先下判断。"></textarea></label>
+              <label class="wide">行动建议<textarea name="suggestion" rows="3" placeholder="下一步如何支持这个学生。"></textarea></label>
+              <label class="check-row wide"><input type="checkbox" name="followUp"> 需要导师跟进</label>
+              <button class="primary-button wide" type="submit">保存动力记录</button>
+            </form>
+          </section>
+          <section class="panel">
+            <div class="panel-head">
+              <h2>动力记录</h2>
+              <p>自动进入学生成长时间线。</p>
+            </div>
+            <div id="motivationList" class="record-list empty-aware"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="view-courses" data-title="课程日历" data-subtitle="课程、项目、特色周、节假日和重复排期统一管理。">
+        <div class="two-column">
+          <section class="panel">
+            <div class="panel-head">
+              <h2 id="courseFormTitle">新增课程/项目</h2>
+              <p>课程可关联中心和成长路径。</p>
+            </div>
+            <form id="courseForm" class="form-grid">
+              <label class="wide">名称<input name="name" required placeholder="例：通识：城市如何生长"></label>
+              <label>所属中心
+                <select name="center">
+                  <option>动力中心</option>
+                  <option>游戏中心</option>
+                  <option>通识中心</option>
+                </select>
+              </label>
+              <fieldset>
+                <legend>成长路径</legend>
+                <label><input type="checkbox" name="paths" value="自治"> 自治</label>
+                <label><input type="checkbox" name="paths" value="阅读"> 阅读</label>
+                <label><input type="checkbox" name="paths" value="通识" checked> 通识</label>
+                <label><input type="checkbox" name="paths" value="行动"> 行动</label>
+              </fieldset>
+              <label>老师<input name="teacher" placeholder="任课老师"></label>
+              <fieldset class="wide">
+                <legend>属性</legend>
+                <label><input type="checkbox" name="attributes" value="特色周"> 特色周</label>
+                <label><input type="checkbox" name="attributes" value="必修课程"> 必修课程</label>
+                <label><input type="checkbox" name="attributes" value="通识课程"> 通识课程</label>
+                <label><input type="checkbox" name="attributes" value="通识选修"> 通识选修</label>
+                <label><input type="checkbox" name="attributes" value="项目选修"> 项目选修</label>
+                <label><input type="checkbox" name="attributes" value="必读书"> 必读书</label>
+                <label><input type="checkbox" name="attributes" value="做事课"> 做事课</label>
+              </fieldset>
+              <label>开始时间<input name="startAt" type="datetime-local"></label>
+              <label>结束时间<input name="endAt" type="datetime-local"></label>
+              <label class="check-row"><input type="checkbox" name="repeatWeekly"> 每周重复</label>
+              <label>重复到<input name="repeatUntil" type="date"></label>
+              <label>规则制定老师<input name="ruleOwner" placeholder="默认任课老师"></label>
+              <label>日常表现权重 %<input id="dailyWeightInput" name="dailyWeight" type="number" min="0" max="100" value="60"></label>
+              <label>期末测试权重 %<input id="finalWeightInput" name="finalWeight" type="number" min="0" max="100" value="40"></label>
+              <label class="wide">说明<textarea name="description" rows="3" placeholder="课程目标、作品要求、是否计入 GPA"></textarea></label>
+              <div class="form-actions wide">
+                <button class="primary-button" id="courseSubmitButton" type="submit">保存课程/项目</button>
+                <button class="secondary-button" id="cancelCourseEdit" type="button" hidden>取消编辑</button>
+              </div>
+            </form>
+          </section>
+          <section class="panel">
+            <div class="panel-head">
+              <h2>课程/项目列表</h2>
+              <p>后续可扩展课次、教室、学期、报名名单。</p>
+            </div>
+            <details class="filter-details">
+              <summary>筛选学生范围</summary>
+              <div class="module-filter-grid">
+                <div>
+                  <h3>状态筛选</h3>
+                  <div id="courseStatusFilters" class="checkbox-grid compact-filter"></div>
+                </div>
+                <div>
+                  <h3>学院筛选</h3>
+                  <div id="courseAcademyFilters" class="checkbox-grid compact-filter"></div>
+                </div>
+              </div>
+            </details>
+            <div id="courseStudentPreview" class="student-chip-list"></div>
+            <div id="courseList" class="record-list empty-aware"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="view-attendance" data-title="信用" data-subtitle="记录信用加减项，查看信用分影响线和风险学生。">
+        <section class="panel credit-policy-panel">
+          <div class="panel-head">
+            <h2>信用积分规则总则</h2>
+            <p>默认只显示关键规则；完整总则和管理员编辑已折叠。</p>
+          </div>
+          <div class="form-actions" style="margin-bottom: 12px;">
+            <button class="secondary-button" data-jump="import" type="button">进入管理设置</button>
+          </div>
+          <div id="creditPolicyView" class="policy-view"></div>
+        </section>
+        <div class="two-column">
+          <section class="panel">
+            <div class="panel-head">
+              <h2>保存信用积分</h2>
+              <p>每位学生每学季默认 100 分，按课程和日期记录加减项。</p>
+            </div>
+            <details class="filter-details">
+              <summary>筛选学生</summary>
+              <div class="module-filter-grid">
+                <div>
+                  <h3>状态筛选</h3>
+                  <div id="creditStatusFilters" class="checkbox-grid compact-filter"></div>
+                </div>
+                <div>
+                  <h3>学院筛选</h3>
+                  <div id="creditAcademyFilters" class="checkbox-grid compact-filter"></div>
+                </div>
+              </div>
+            </details>
+            <div class="tool-block">
+              <h3>添加单条信用记录</h3>
+              <form id="creditEntryForm" class="form-grid compact">
+                <label>学生<select name="studentId" id="creditStudentSelect" required></select></label>
+                <label>积分条目<select name="ruleId" data-credit-rule-select required></select></label>
+                <label>日期<input name="date" type="date" required></label>
+                <label>记录老师<input name="teacher" placeholder="记录老师"></label>
+                <label class="wide">关联课程/项目<select name="courseId" data-course-select-optional></select></label>
+                <label class="wide">备注<input name="note" placeholder="例：生活老师审核通过；迟到20分钟；公共服务完成"></label>
+                <button class="primary-button wide" type="submit">添加信用条目</button>
+              </form>
+            </div>
+            <div class="tool-block">
+              <h3>批量记录</h3>
+            <form id="attendanceForm" class="attendance-form">
+              <div class="form-grid compact">
+                <label>课程/项目<select name="courseId" data-course-select required></select></label>
+                <label>日期<input name="date" type="date" required></label>
+                <label>记录老师<input name="teacher" placeholder="记录老师"></label>
+              </div>
+              <div id="attendanceTable" class="attendance-table"></div>
+              <button class="primary-button" type="submit">保存本次信用积分</button>
+            </form>
+            </div>
+          </section>
+        </div>
+        <section class="panel">
+          <div class="panel-head">
+            <h2>最近信用积分</h2>
+            <p>可在总览页和学生报告中汇总。</p>
+          </div>
+          <div id="attendanceList" class="record-list empty-aware"></div>
+        </section>
+        <section class="panel">
+          <div class="panel-head">
+            <h2>信用数据分析</h2>
+            <p>按 100 分初始分和 2.6 规则自动判断福利、限制、复活风险。</p>
+          </div>
+          <div id="creditAnalytics"></div>
+        </section>
+      </section>
+
+      <section class="view" id="view-gpa" data-title="成绩" data-subtitle="录入课程表现、科目评语、GPA 和老师评分规则快照。">
+        <div class="two-column">
+          <section class="panel">
+            <div class="panel-head">
+              <h2>录入课程表现</h2>
+              <p>先记录日常表现和科目评语；如果有期末测试，系统按课程规则合成总评。</p>
+            </div>
+            <details class="filter-details">
+              <summary>筛选学生</summary>
+              <div class="module-filter-grid">
+                <div>
+                  <h3>状态筛选</h3>
+                  <div id="gradeStatusFilters" class="checkbox-grid compact-filter"></div>
+                </div>
+                <div>
+                  <h3>学院筛选</h3>
+                  <div id="gradeAcademyFilters" class="checkbox-grid compact-filter"></div>
+                </div>
+              </div>
+            </details>
+            <form id="gradeForm" class="form-grid">
+              <label>学生<select name="studentId" id="gradeStudentSelect" required></select></label>
+              <label>课程/科目<select name="courseId" data-course-select required></select></label>
+              <label>任课老师<input name="teacher" required placeholder="任课老师"></label>
+              <label>周期<input name="term" placeholder="2026 春季 / 项目第 1 期"></label>
+              <label>日常表现<input name="dailyScore" required type="number" min="0" max="100" placeholder="88"></label>
+              <label>期末测试<input name="finalScore" type="number" min="0" max="100" placeholder="可留空"></label>
+              <label>学分/权重<input name="credit" type="number" min="0.5" step="0.5" value="1"></label>
+              <label class="check-row wide"><input type="checkbox" name="countsGpa" checked> 计入 GPA</label>
+              <label class="wide">科目评语<textarea name="comment" required rows="4" placeholder="学生在本科目中的表现、优势、困难与下一步建议。"></textarea></label>
+              <label class="wide">代表性作品/链接<input name="artifact" placeholder="作品链接或文件名"></label>
+              <button class="primary-button wide" type="submit">保存成绩与评语</button>
+            </form>
+          </section>
+          <section class="panel">
+            <div class="panel-head">
+              <h2>GPA 输出</h2>
+              <p>按学生汇总已录入且计入 GPA 的课程。</p>
+            </div>
+            <div id="gpaSummary" class="gpa-grid empty-aware"></div>
+            <div id="gradeList" class="record-list empty-aware"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="view-reports" data-title="报告" data-subtitle="筛选学生，生成内部成长档案草稿，后续扩展家长版和学生版。">
+        <section class="panel">
+          <div class="panel-head">
+            <h2>生成报告</h2>
+            <p>先生成内部草稿，后续再做家长版、学生版、导师版模板。</p>
+          </div>
+          <details class="filter-details">
+            <summary>筛选学生</summary>
+            <div class="report-filter-grid">
+              <div>
+                <h3>状态筛选</h3>
+                <div id="reportStatusFilters" class="checkbox-grid compact-filter"></div>
+              </div>
+              <div>
+                <h3>学院筛选</h3>
+                <div id="reportAcademyFilters" class="checkbox-grid compact-filter"></div>
+              </div>
+            </div>
+          </details>
+          <div class="report-controls">
+            <label>选择学生<select id="reportStudent"></select></label>
+            <button class="primary-button" id="generateReport" type="button">生成报告</button>
+            <button class="secondary-button" id="printReport" type="button">打印 / 存为 PDF</button>
+          </div>
+        </section>
+        <article id="reportOutput" class="report-output panel"></article>
+      </section>
+
+      <section class="view" id="view-import" data-title="管理设置" data-subtitle="管理员维护基础设置、规则、导入导出和外部资料归档。">
+        <section class="settings-hero panel">
+          <div>
+            <span class="hero-kicker">Admin Settings</span>
+            <h2>把配置放在后台，把老师的页面留给记录和判断</h2>
+            <p>学院、校历、信用规则、外部资料归档都在这里维护。正式版接权限后，本页只对管理员开放。</p>
+          </div>
+        </section>
+        <div class="two-column">
+          <section class="panel">
+            <div class="panel-head">
+              <h2>学院设置</h2>
+              <p>新增、编辑、删除学院；离开和毕业学生会自动归为无学院。</p>
+            </div>
+            <form id="academyForm" class="form-grid compact">
+              <label>学院名称<input name="name" required placeholder="例：赤焰学院"></label>
+              <label>学院颜色
+                <select name="color">
+                  <option value="red">红</option>
+                  <option value="yellow">黄</option>
+                  <option value="blue">蓝</option>
+                  <option value="green">绿</option>
+                  <option value="teal">青</option>
+                  <option value="violet">紫</option>
+                </select>
+              </label>
+              <div class="form-actions wide">
+                <button class="primary-button" id="academySubmitButton" type="submit">新增学院</button>
+                <button class="secondary-button" id="cancelAcademyEdit" type="button" hidden>取消编辑</button>
+              </div>
+            </form>
+            <div id="academyList" class="academy-list empty-aware"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head">
+              <h2>校历与节假日</h2>
+              <p>节假日会显示在总览日历，并让每周重复课程自动跳过。</p>
+            </div>
+            <form id="holidayForm" class="form-grid compact">
+              <label>开始日期<input name="startDate" type="date" required></label>
+              <label>结束日期<input name="endDate" type="date" required></label>
+              <label>名称<input name="label" required placeholder="例：国庆假期"></label>
+              <button class="primary-button wide" type="submit">保存节假日</button>
+            </form>
+            <div id="holidayList" class="record-list empty-aware"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head">
+              <h2>信用规则设置</h2>
+              <p>维护信用积分标签和分值。修改规则不会改动历史记录。</p>
+            </div>
+            <div class="form-actions" style="margin-bottom: 12px;">
+              <button class="secondary-button" id="importCreditPolicyRules" type="button">导入信用积分规则 2.6 模板</button>
+            </div>
+            <form id="creditRuleForm" class="form-grid compact">
+              <label>标签项目<input name="label" required placeholder="例：主动组织复盘"></label>
+              <label>分值<input name="points" required type="number" step="1" placeholder="例：3 或 -1"></label>
+              <div class="form-actions wide">
+                <button class="primary-button" id="creditRuleSubmitButton" type="submit">保存规则</button>
+                <button class="secondary-button" id="cancelCreditRuleEdit" type="button" hidden>取消编辑</button>
+              </div>
+            </form>
+            <div id="creditRuleList" class="record-list empty-aware"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head">
+              <h2>信用总则</h2>
+              <p>编辑公开展示的信用积分规则总则。</p>
+            </div>
+            <details class="admin-details">
+              <summary>编辑信用积分总则</summary>
+              <form id="creditPolicyForm" class="form-grid">
+                <label class="wide">规则总则<textarea name="content" rows="14"></textarea></label>
+                <div class="form-actions wide">
+                  <button class="primary-button" type="submit">保存总则</button>
+                  <button class="secondary-button" id="resetCreditPolicy" type="button">恢复默认 2.6 总则</button>
+                </div>
+              </form>
+            </details>
+          </section>
+          <section class="panel">
+            <div class="panel-head">
+              <h2>登记外部资料</h2>
+              <p>第一版先记录来源和归档意图，后续再接 Google、Notion、Gmail API。</p>
+            </div>
+            <details class="admin-details">
+              <summary>登记一条外部资料</summary>
+              <form id="importForm" class="form-grid">
+                <label>来源平台
+                  <select name="source">
+                    <option>QUIP</option>
+                    <option>Google Classroom</option>
+                    <option>Notion</option>
+                    <option>Google Sheet</option>
+                    <option>Google Drive</option>
+                    <option>Gmail</option>
+                    <option>Excel / CSV</option>
+                    <option>PDF / Word</option>
+                  </select>
+                </label>
+                <label>匹配学生<select name="studentId" data-student-select></select></label>
+                <label>归档类型
+                  <select name="archiveType">
+                    <option>动力记录</option>
+                    <option>阅读记录</option>
+                    <option>项目记录</option>
+                    <option>作品附件</option>
+                    <option>家校沟通</option>
+                    <option>成绩或信用积分</option>
+                  </select>
+                </label>
+                <label>审核状态
+                  <select name="status">
+                    <option>待确认</option>
+                    <option>已归档</option>
+                    <option>无法匹配</option>
+                  </select>
+                </label>
+                <label class="wide">原始链接/文件名<input name="link" placeholder="粘贴链接或写文件名"></label>
+                <label class="wide">摘要<textarea name="summary" rows="3" placeholder="这份资料大概是什么，为什么要归档。"></textarea></label>
+                <button class="primary-button wide" type="submit">保存导入记录</button>
+              </form>
+            </details>
+          </section>
+          <section class="panel">
+            <div class="panel-head">
+              <h2>导入记录</h2>
+              <p>保留来源，方便以后追溯。</p>
+            </div>
+            <div id="importList" class="record-list empty-aware"></div>
+          </section>
+          <section class="panel danger-zone">
+            <div class="panel-head">
+              <h2>数据维护</h2>
+              <p>仅管理员或测试阶段使用。正式版应加入权限、备份和操作日志。</p>
+            </div>
+            <div class="form-actions">
+              <button class="secondary-button" id="seedButton" type="button">恢复样例数据</button>
+              <button class="ghost-button danger" id="clearButton" type="button">清空本地数据</button>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="emptyTemplate">
+    <div class="empty-state">还没有数据，先从左侧表单新增一条。</div>
+  </template>
+
+  <script src="./app.js"></script>
+</body>
+</html>

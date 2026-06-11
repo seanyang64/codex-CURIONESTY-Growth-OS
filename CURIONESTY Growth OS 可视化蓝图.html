@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CURIONESTY Growth OS 可视化蓝图</title>
+  <style>
+    :root {
+      --ink: #1d2329;
+      --muted: #5f6b76;
+      --line: #d8dee5;
+      --paper: #fbfaf7;
+      --panel: #ffffff;
+      --blue: #2e6f9e;
+      --teal: #23806f;
+      --green: #557a2f;
+      --gold: #b77a1f;
+      --red: #a95042;
+      --violet: #6c5d93;
+      --shadow: 0 14px 34px rgba(25, 35, 45, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      line-height: 1.55;
+    }
+
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 44px 28px 64px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 28px;
+      align-items: end;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 28px;
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(30px, 4vw, 56px);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 760px;
+    }
+
+    .meta {
+      justify-self: end;
+      padding: 18px 20px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      min-width: 260px;
+    }
+
+    .meta div {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .meta strong {
+      color: var(--ink);
+      font-weight: 650;
+    }
+
+    section {
+      margin-top: 34px;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 24px;
+      letter-spacing: 0;
+    }
+
+    .note {
+      color: var(--muted);
+      margin: -6px 0 18px;
+      max-width: 900px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr 1fr;
+      grid-template-rows: auto auto auto;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .node {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 16px;
+      min-height: 104px;
+      position: relative;
+    }
+
+    .node h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .node p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .center {
+      grid-column: 2;
+      grid-row: 1 / 4;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      min-height: 360px;
+      border: 2px solid var(--ink);
+      background: #fefefe;
+    }
+
+    .center h3 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .center .big {
+      font-size: 18px;
+      color: var(--ink);
+      font-weight: 650;
+      margin-bottom: 12px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #f7f8f8;
+      font-size: 13px;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .blue { border-top: 5px solid var(--blue); }
+    .teal { border-top: 5px solid var(--teal); }
+    .green { border-top: 5px solid var(--green); }
+    .gold { border-top: 5px solid var(--gold); }
+    .red { border-top: 5px solid var(--red); }
+    .violet { border-top: 5px solid var(--violet); }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 16px 14px;
+      min-height: 154px;
+      position: relative;
+    }
+
+    .step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 22px;
+      color: var(--muted);
+      z-index: 2;
+    }
+
+    .step .num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--ink);
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .step h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    li + li {
+      margin-top: 4px;
+    }
+
+    .import {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .source-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .source {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: #f8f9f7;
+      color: var(--ink);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      counter-reset: phase;
+    }
+
+    .phase {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fff;
+      min-height: 142px;
+    }
+
+    .phase::before {
+      counter-increment: phase;
+      content: counter(phase);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--teal);
+      color: white;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .phase h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .phase p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .footer {
+      margin-top: 34px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 980px) {
+      header,
+      .overview,
+      .flow,
+      .matrix,
+      .import,
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+
+      .meta {
+        justify-self: stretch;
+      }
+
+      .center {
+        grid-column: auto;
+        grid-row: auto;
+        min-height: 240px;
+      }
+
+      .step:not(:last-child)::after {
+        content: "↓";
+        right: 50%;
+        top: auto;
+        bottom: -22px;
+        transform: translateX(50%);
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        max-width: none;
+        padding: 18mm;
+      }
+
+      .panel,
+      .meta {
+        box-shadow: none;
+      }
+
+      section {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div>
+        <h1>CURIONESTY Growth OS 好奇成长系统</h1>
+        <p class="subtitle">以学生唯一档案为中心，把三大中心、四条成长路径、外部资料和阶段报告连接成一套可维护的成长管理系统。</p>
+      </div>
+      <div class="meta">
+        <div><span>版本</span><strong>可视化蓝图 v1</strong></div>
+        <div><span>日期</span><strong>2026-06-05</strong></div>
+        <div><span>第一重点</span><strong>好奇学习社区</strong></div>
+      </div>
+    </header>
+
+    <section>
+      <h2>1. 总览图</h2>
+      <p class="note">学生档案在中心，三大中心负责观察和课程场景，四条成长路径负责归纳学生如何成长。</p>
+      <div class="panel overview">
+        <div class="node blue">
+          <h3>动力中心</h3>
+          <p>每位老师随时记录学生当下状态，以好奇、勇气、觉悟为维度，形成事实标签和行动建议。</p>
+        </div>
+        <div class="node center">
+          <h3>学生唯一档案</h3>
+          <p class="big">一生一学号，一生一成长记录</p>
+          <p>连接课程、项目、考勤、缴费、作品、老师观察、成绩和报告。</p>
+          <div class="badge-row">
+            <span class="badge">成长时间线</span>
+            <span class="badge">成长画像</span>
+            <span class="badge">作品集</span>
+            <span class="badge">成绩单</span>
+            <span class="badge">家长报告</span>
+          </div>
+        </div>
+        <div class="node teal">
+          <h3>游戏中心</h3>
+          <p>记录规则理解、策略、合作、情绪、输赢反应和复盘能力，让游戏成为成长证据。</p>
+        </div>
+        <div class="node green">
+          <h3>通识中心</h3>
+          <p>记录学生如何提出问题、理解概念、表达观点、连接真实世界并形成判断。</p>
+        </div>
+        <div class="node gold">
+          <h3>四条成长路径</h3>
+          <p>自治、阅读、通识、行动。所有记录都可以归入路径，形成长期成长线索。</p>
+        </div>
+        <div class="node red">
+          <h3>项目与日程</h3>
+          <p>课程、读书会、游戏、行动项目、冬夏令营、21 天项目、28 天项目统一管理。</p>
+        </div>
+        <div class="node violet">
+          <h3>外部资料入口</h3>
+          <p>QUIP、Google Classroom、Notion、Google Sheet、Drive、Gmail 等资料先进入导入中心。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 动力中心记录流</h2>
+      <p class="note">动力中心是第一版最关键入口，目标是让老师能在真实场景中快速记录，并自动归入学生成长档案。</p>
+      <div class="panel flow">
+        <div class="step blue">
+          <div class="num">1</div>
+          <h3>老师看见状态</h3>
+          <p>课堂、游戏、阅读、冲突、自由时间、项目执行中出现的真实瞬间。</p>
+        </div>
+        <div class="step blue">
+          <div class="num">2</div>
+          <h3>选择成长维度</h3>
+          <p>好奇、勇气、觉悟。可以单选，也可以多选。</p>
+        </div>
+        <div class="step blue">
+          <div class="num">3</div>
+          <h3>记录事实标签</h3>
+          <p>主动提问、面对失败、自我反思、承担责任、公开表达等。</p>
+        </div>
+        <div class="step blue">
+          <div class="num">4</div>
+          <h3>给出行动建议</h3>
+          <p>继续鼓励、安排谈话、给表达机会、邀请担任角色、提醒导师跟进。</p>
+        </div>
+        <div class="step blue">
+          <div class="num">5</div>
+          <h3>进入成长档案</h3>
+          <p>自动形成时间线、动力画像、导师待办和阶段性报告素材。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 三大中心与四条路径</h2>
+      <p class="note">中心负责教育场景，路径负责成长归类；同一条记录可以来自某个中心，同时归入某条路径。</p>
+      <div class="panel matrix">
+        <div class="card blue">
+          <h3>三大中心</h3>
+          <ul>
+            <li>动力中心：好奇、勇气、觉悟</li>
+            <li>游戏中心：规则、策略、合作、复盘</li>
+            <li>通识中心：问题、概念、观点、判断</li>
+          </ul>
+        </div>
+        <div class="card gold">
+          <h3>四条路径</h3>
+          <ul>
+            <li>自治：计划、选择、时间、责任</li>
+            <li>阅读：书目、笔记、讨论、写作</li>
+            <li>通识：主题、概念、表达、世界理解</li>
+            <li>行动：项目、角色、成果、复盘</li>
+          </ul>
+        </div>
+        <div class="card teal">
+          <h3>统一输出</h3>
+          <ul>
+            <li>学生成长时间线</li>
+            <li>好奇/勇气/觉悟画像</li>
+            <li>课程与项目报告</li>
+            <li>成长档案与成绩单</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 外部资料导入图</h2>
+      <p class="note">历史资料不能直接塞进学生档案，必须经过导入、匹配、确认、归档，避免重复、错配和权限混乱。</p>
+      <div class="panel import">
+        <div class="card violet">
+          <h3>历史资料来源</h3>
+          <div class="source-list">
+            <div class="source">QUIP</div>
+            <div class="source">Notion</div>
+            <div class="source">Google Sheet</div>
+            <div class="source">Google Drive</div>
+            <div class="source">Gmail</div>
+            <div class="source">Classroom</div>
+            <div class="source">Excel / CSV</div>
+            <div class="source">PDF / Word</div>
+          </div>
+        </div>
+        <div class="card red">
+          <h3>导入与归档中心</h3>
+          <ul>
+            <li>识别学生、时间、老师、课程</li>
+            <li>匹配学生学号</li>
+            <li>无法匹配进入待确认</li>
+            <li>保留原始链接和来源</li>
+            <li>人工审核后再入档</li>
+          </ul>
+        </div>
+        <div class="card green">
+          <h3>进入学生档案</h3>
+          <ul>
+            <li>动力记录</li>
+            <li>阅读记录</li>
+            <li>项目记录</li>
+            <li>作品附件</li>
+            <li>家校沟通</li>
+            <li>成绩或考勤</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. 第一版 MVP 推进图</h2>
+      <p class="note">不要先做一个庞大的完整系统。先做结构正确、老师愿意用、能沉淀学生档案的第一版。</p>
+      <div class="panel timeline">
+        <div class="phase">
+          <h3>蓝图确认</h3>
+          <p>确认系统边界、学生档案、三大中心、四条路径、权限和导入原则。</p>
+        </div>
+        <div class="phase">
+          <h3>原型设计</h3>
+          <p>优先设计老师快速记录页、学生档案页、动力中心看板和导入中心。</p>
+        </div>
+        <div class="phase">
+          <h3>MVP 开发</h3>
+          <p>登录、学生档案、动力记录、课程项目、考勤、GPA 输入输出、科目评语、查询和基础报告。</p>
+        </div>
+        <div class="phase">
+          <h3>小范围试用</h3>
+          <p>让 3-5 位老师和 10-20 位学生先跑一个周期，观察真实使用情况。</p>
+        </div>
+        <div class="phase">
+          <h3>扩展连接</h3>
+          <p>再加入游戏中心、通识中心、完整 GPA 规则、缴费、家长端和 Google/Notion 自动同步。</p>
+        </div>
+      </div>
+      <div class="matrix" style="margin-top: 16px;">
+        <div class="card gold">
+          <h3>GPA 输入</h3>
+          <ul>
+            <li>学生、课程/科目、老师</li>
+            <li>分数或等级、学分/权重</li>
+            <li>是否计入 GPA</li>
+            <li>代表性作品或附件</li>
+          </ul>
+        </div>
+        <div class="card green">
+          <h3>科目评语</h3>
+          <ul>
+            <li>单科表现摘要</li>
+            <li>学习态度与参与度</li>
+            <li>优势、困难和行动建议</li>
+            <li>是否进入家长报告</li>
+          </ul>
+        </div>
+        <div class="card teal">
+          <h3>成绩报告输出</h3>
+          <ul>
+            <li>单科成绩与评语</li>
+            <li>GPA 汇总</li>
+            <li>课程表现摘要</li>
+            <li>成绩单 + 成长档案</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>6. 长期维护口子</h2>
+      <div class="panel matrix">
+        <div class="card green">
+          <h3>新增部门</h3>
+          <ul>
+            <li>新增部门类型</li>
+            <li>新增项目类型</li>
+            <li>新增权限组</li>
+            <li>复用学生主档案</li>
+          </ul>
+        </div>
+        <div class="card gold">
+          <h3>新增评价</h3>
+          <ul>
+            <li>评价维度可配置</li>
+            <li>事实标签可配置</li>
+            <li>报告模板可配置</li>
+            <li>不重写底层结构</li>
+          </ul>
+        </div>
+        <div class="card violet">
+          <h3>新增平台</h3>
+          <ul>
+            <li>统一进入导入中心</li>
+            <li>新增来源适配器</li>
+            <li>匹配学号后归档</li>
+            <li>保留原始来源</li>
+          </ul>
+        </div>
+      </div>
+      <div class="legend">
+        <span><i class="dot" style="background: var(--blue);"></i>动力中心</span>
+        <span><i class="dot" style="background: var(--teal);"></i>游戏中心</span>
+        <span><i class="dot" style="background: var(--green);"></i>通识中心 / 归档</span>
+        <span><i class="dot" style="background: var(--gold);"></i>成长路径 / 报告</span>
+        <span><i class="dot" style="background: var(--violet);"></i>外部平台</span>
+      </div>
+    </section>
+
+    <p class="footer">这张图对应《CURIONESTY Growth OS 好奇成长系统蓝图 v1》，用于团队讨论、原型设计和开发前确认。</p>
+  </main>
+</body>
+</html>

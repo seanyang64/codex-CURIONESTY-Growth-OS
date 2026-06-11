@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1080" viewBox="0 0 1600 1080">
+  <defs>
+    <style>
+      .bg { fill: #fbfaf7; }
+      .title { font: 700 46px -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1d2329; }
+      .subtitle { font: 400 22px -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #5f6b76; }
+      .h { font: 700 24px -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1d2329; }
+      .p { font: 400 17px -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #5f6b76; }
+      .small { font: 400 15px -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #5f6b76; }
+      .tag { font: 600 15px -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; fill: #1d2329; }
+      .box { fill: #ffffff; stroke: #d8dee5; stroke-width: 2; rx: 14; }
+      .center { fill: #ffffff; stroke: #1d2329; stroke-width: 4; rx: 18; }
+      .line { stroke: #9aa6b2; stroke-width: 3; fill: none; }
+      .blue { stroke: #2e6f9e; }
+      .teal { stroke: #23806f; }
+      .green { stroke: #557a2f; }
+      .gold { stroke: #b77a1f; }
+      .red { stroke: #a95042; }
+      .violet { stroke: #6c5d93; }
+      .chip { fill: #f7f8f8; stroke: #d8dee5; stroke-width: 1.4; rx: 16; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9aa6b2"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1600" height="1080"/>
+
+  <text class="title" x="70" y="86">CURIONESTY Growth OS 好奇成长系统</text>
+  <text class="subtitle" x="72" y="126">以学生唯一档案为中心，连接三大中心、四条成长路径、历史资料和成长报告</text>
+
+  <rect class="center" x="535" y="305" width="530" height="280"/>
+  <text class="h" x="800" y="360" text-anchor="middle">学生唯一档案</text>
+  <text class="subtitle" x="800" y="398" text-anchor="middle">一生一学号，一生一成长记录</text>
+  <text class="p" x="800" y="444" text-anchor="middle">课程、项目、考勤、缴费、作品、老师观察、成绩和报告</text>
+
+  <rect class="chip" x="612" y="486" width="120" height="34"/>
+  <text class="tag" x="672" y="509" text-anchor="middle">成长时间线</text>
+  <rect class="chip" x="742" y="486" width="110" height="34"/>
+  <text class="tag" x="797" y="509" text-anchor="middle">成长画像</text>
+  <rect class="chip" x="862" y="486" width="92" height="34"/>
+  <text class="tag" x="908" y="509" text-anchor="middle">作品集</text>
+  <rect class="chip" x="964" y="486" width="86" height="34"/>
+  <text class="tag" x="1007" y="509" text-anchor="middle">报告</text>
+
+  <rect class="box blue" x="70" y="220" width="360" height="150"/>
+  <text class="h" x="100" y="260">动力中心</text>
+  <text class="p" x="100" y="296">老师随时记录学生当下状态</text>
+  <text class="p" x="100" y="326">好奇、勇气、觉悟 + 事实标签</text>
+  <text class="p" x="100" y="356">每条记录带一个行动建议</text>
+
+  <rect class="box teal" x="70" y="430" width="360" height="150"/>
+  <text class="h" x="100" y="470">游戏中心</text>
+  <text class="p" x="100" y="506">记录规则、策略、合作、情绪</text>
+  <text class="p" x="100" y="536">输赢反应和复盘能力</text>
+
+  <rect class="box green" x="70" y="640" width="360" height="150"/>
+  <text class="h" x="100" y="680">通识中心</text>
+  <text class="p" x="100" y="716">记录问题、概念、讨论、观点</text>
+  <text class="p" x="100" y="746">以及学生如何形成判断</text>
+
+  <rect class="box gold" x="1170" y="200" width="360" height="115"/>
+  <text class="h" x="1200" y="240">自治</text>
+  <text class="p" x="1200" y="276">计划、选择、时间、责任</text>
+
+  <rect class="box gold" x="1170" y="345" width="360" height="115"/>
+  <text class="h" x="1200" y="385">阅读</text>
+  <text class="p" x="1200" y="421">书目、笔记、讨论、写作</text>
+
+  <rect class="box gold" x="1170" y="490" width="360" height="115"/>
+  <text class="h" x="1200" y="530">通识</text>
+  <text class="p" x="1200" y="566">主题、概念、表达、世界理解</text>
+
+  <rect class="box gold" x="1170" y="635" width="360" height="115"/>
+  <text class="h" x="1200" y="675">行动</text>
+  <text class="p" x="1200" y="711">项目、角色、成果、复盘</text>
+
+  <path class="line" d="M430 295 C480 295, 500 340, 535 380" marker-end="url(#arrow)"/>
+  <path class="line" d="M430 505 C480 505, 500 475, 535 455" marker-end="url(#arrow)"/>
+  <path class="line" d="M430 715 C490 690, 505 565, 535 535" marker-end="url(#arrow)"/>
+
+  <path class="line" d="M1065 375 C1110 340, 1130 285, 1170 258" marker-end="url(#arrow)"/>
+  <path class="line" d="M1065 420 C1110 405, 1130 405, 1170 403" marker-end="url(#arrow)"/>
+  <path class="line" d="M1065 475 C1110 490, 1130 530, 1170 548" marker-end="url(#arrow)"/>
+  <path class="line" d="M1065 535 C1110 590, 1130 660, 1170 692" marker-end="url(#arrow)"/>
+
+  <rect class="box violet" x="80" y="895" width="460" height="120"/>
+  <text class="h" x="110" y="935">外部资料导入与归档中心</text>
+  <text class="p" x="110" y="971">QUIP、Notion、Google Sheet、Drive、Gmail、Classroom</text>
+  <text class="small" x="110" y="998">导入 → 匹配学号 → 人工确认 → 归入学生档案</text>
+
+  <rect class="box red" x="570" y="895" width="460" height="120"/>
+  <text class="h" x="600" y="935">MVP 第一版输入</text>
+  <text class="p" x="600" y="971">动力记录 + GPA 成绩 + 科目评语</text>
+  <text class="small" x="600" y="998">目标：老师能快速记录，也能完成成绩与评语输入</text>
+
+  <rect class="box green" x="1060" y="895" width="460" height="120"/>
+  <text class="h" x="1090" y="935">系统输出</text>
+  <text class="p" x="1090" y="971">GPA 汇总、科目报告、成长档案、成绩单</text>
+  <text class="small" x="1090" y="998">报告模板可配置，权限分级可见</text>
+
+  <path class="line" d="M310 895 C400 800, 570 660, 680 585" marker-end="url(#arrow)"/>
+  <path class="line" d="M800 895 L800 585" marker-end="url(#arrow)"/>
+  <path class="line" d="M1065 520 C1230 675, 1290 785, 1290 895" marker-end="url(#arrow)"/>
+
+  <text class="small" x="70" y="1050">v1 重点：先把学生档案、动力中心快速记录、GPA 输入输出、科目评语、成长时间线、基础查询、报告生成和导入中心做稳。</text>
+</svg>
